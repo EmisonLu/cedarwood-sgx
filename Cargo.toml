@@ -1,0 +1,40 @@
+[package]
+name = "cedarwood"
+description = "efficiently-updatable double-array trie in Rust (ported from cedar)"
+repository = "https://github.com/MnO2/cedarwood"
+version = "0.4.4"
+license = "BSD-2-Clause"
+authors = ["Paul Meng <me@paulme.ng>"]
+readme = "README.md"
+keywords = ["trie", "cedar", "string", "search", "text"]
+categories = ["data-structures", "text-processing"]
+edition = "2018"
+exclude = ["/benches/**", "/.travis.yml"]
+
+[badges]
+travis-ci = { repository = "MnO2/cedarwood" }
+codecov = { repository = "MnO2/cedarwood" }
+
+[features]
+default = []
+reduced-trie = []
+
+[dev-dependencies]
+criterion = "0.3"
+rand = { git = "https://github.com/mesalock-linux/rand-sgx" }
+
+[[bench]]
+name = "cedarwood_benchmark"
+harness = false
+path = "./benches/cedarwood_benchmark.rs"
+required-features = []
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+smallvec = "1.0"
+
+[target.'cfg(not(target_env = "sgx"))'.dependencies]
+sgx_tstd = { version = "1.0", rev = "v1.1.2", git = "https://github.com/apache/teaclave-sgx-sdk.git", features=["untrusted_fs","thread", "backtrace"] }
+sgx_libc = { version = "1.0", rev = "v1.1.2", git = "https://github.com/apache/teaclave-sgx-sdk.git" }
